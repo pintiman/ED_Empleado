@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.*;
@@ -5,8 +6,9 @@ import java.util.regex.*;
 public class Empleado {
 
     private String nombre, oficio;
-    private int codEmpleado, departamento, salario;
-    private String[] listaEmpleados;
+    private int salario;
+    private long codEmpleado, departamento;
+    private ArrayList <String> listaEmpleados;
 
     public String getNombre(){
 
@@ -18,12 +20,12 @@ public class Empleado {
         return oficio;
     }
 
-    public int getCodEmpleado(){
+    public long getCodEmpleado(){
 
         return codEmpleado;
     }
 
-    public int getDepartamento(){
+    public long getDepartamento(){
 
         return departamento;
     }
@@ -33,7 +35,8 @@ public class Empleado {
         return salario;
     }
 
-    public String[] getListaEmpleados(){
+    public ArrayList<String> getListaEmpleados(){
+
         return listaEmpleados;
     }
 
@@ -42,12 +45,12 @@ public class Empleado {
         this.nombre = nombre;
     }
 
-    public void setCodEmpleado(int codEmpleado) {
+    public void setCodEmpleado(long codEmpleado) {
 
         this.codEmpleado = codEmpleado;
     }
 
-    public void setDepartamento(int departamento) {
+    public void setDepartamento(long departamento) {
 
         this.departamento = departamento;
     }
@@ -66,7 +69,7 @@ public class Empleado {
 
     }
 
-    public Empleado(String nombre, int codEmpleado, String oficio, int departamento){
+    public Empleado(String nombre, long codEmpleado, String oficio, long departamento){
 
         this.nombre = nombre;
         this.codEmpleado = codEmpleado;
@@ -77,12 +80,12 @@ public class Empleado {
 
     @Override
     public String toString() {
-        return "Empleado{" +
-                "nombre='" + nombre + '\'' +
-                ", oficio='" + oficio + '\'' +
-                ", codEmpleado=" + codEmpleado +
-                ", departamento=" + departamento +
-                ", salario=" + salario +
+        return "Empleado{ " +
+                "nombre = '" + nombre + '\'' +
+                ", oficio = '" + oficio + '\'' +
+                ", codEmpleado = " + codEmpleado +
+                ", departamento = " + departamento +
+                ", salario = " + salario + '€' +
                 '}';
     }
 
@@ -172,7 +175,7 @@ public class Empleado {
         Scanner entrada = new Scanner(System.in);
 
         System.out.println("Introduzca el código del empleado");
-        codEmpleado = entrada.nextInt();
+        codEmpleado = entrada.nextLong();
 
         String strcodEmpleado = String.valueOf(codEmpleado);
 
@@ -213,7 +216,7 @@ public class Empleado {
         Scanner entrada = new Scanner(System.in);
 
         System.out.println("Introduzca el departamento. (Dos cifras. Si no lo sabe, déjelo en blanco)");
-        departamento = entrada.nextInt();
+        departamento = entrada.nextLong();
 
         String strDepartamento = String.valueOf(departamento);
 
@@ -238,6 +241,14 @@ public class Empleado {
             setDepartamento(departamento);
             System.out.println("Departamento almacenado");
         }
+    }
+
+    public void add(){
+
+        listaEmpleados = new ArrayList<>();
+
+        listaEmpleados.add(toString());
+
     }
 
 }
