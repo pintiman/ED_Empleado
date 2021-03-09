@@ -7,8 +7,11 @@ public class Empleado {
 
     private String nombre, oficio;
     private int salario;
-    private long codEmpleado, departamento;
+    private String codEmpleado, departamento;
     private ArrayList <String> listaEmpleados;
+
+    private final String minCodEmpleado = "000";
+    private final String minCodDepartamento = "00";
 
     public String getNombre(){
 
@@ -20,12 +23,12 @@ public class Empleado {
         return oficio;
     }
 
-    public long getCodEmpleado(){
+    public String getCodEmpleado(){
 
         return codEmpleado;
     }
 
-    public long getDepartamento(){
+    public String getDepartamento(){
 
         return departamento;
     }
@@ -45,12 +48,12 @@ public class Empleado {
         this.nombre = nombre;
     }
 
-    public void setCodEmpleado(long codEmpleado) {
+    public void setCodEmpleado(String codEmpleado) {
 
         this.codEmpleado = codEmpleado;
     }
 
-    public void setDepartamento(long departamento) {
+    public void setDepartamento(String departamento) {
 
         this.departamento = departamento;
     }
@@ -69,7 +72,7 @@ public class Empleado {
 
     }
 
-    public Empleado(String nombre, long codEmpleado, String oficio, long departamento){
+    public Empleado(String nombre, String codEmpleado, String oficio, String departamento){
 
         this.nombre = nombre;
         this.codEmpleado = codEmpleado;
@@ -155,60 +158,98 @@ public class Empleado {
             System.exit(0);
         }
 
-        else if(Character.isDigit(chNombre.length)){
-
-            System.out.println("Error, el nombre no puede contener dígitos");
-            System.exit(0);
-        }
-
         else{
 
-            setNombre(nombre);
-            System.out.println("Nombre almacenado");
+            for (int i = 0; i <= nombre.length(); i++){
+
+                if (String.valueOf(chNombre[i]).matches("^[0-9]$")){
+
+                    System.out.println("Error, el nombre no puede contener dígitos");
+                    System.exit(0);
+
+                }
+
+                else{
+
+                    setNombre(nombre);
+                    System.out.println("Nombre almacenado");
+                    break;
+
+                }
+
+            }
         }
 
     }
 
     public void comprobarCodEmpleado(){
 
-
         Scanner entrada = new Scanner(System.in);
 
         System.out.println("Introduzca el código del empleado");
-        codEmpleado = entrada.nextLong();
 
-        String strcodEmpleado = String.valueOf(codEmpleado);
+        codEmpleado = entrada.nextLine();
 
-        if(strcodEmpleado.length() == 0){
+        char[] charCodeEmpleado = codEmpleado.toCharArray();
+
+
+        if(codEmpleado.length() == 0){
 
             System.out.println("Error ER1. El código del empleado no puede estar vacío.");
             System.exit(0);
         }
 
-        else if(!strcodEmpleado.matches("^[0-9] {1,3} $")){
+        else if(codEmpleado.length() > 3){
 
-            System.out.println("Error ER1. El código del empleado no puede ser mayor o menor de 3 cifras.");
-
-        }
-
-        else if (strcodEmpleado.matches("[a-zA-Z]")){
-
-            System.out.println("Error ER1. El código del empleado no puede contener letras");
-            System.exit(0);
-
-        }
-
-        else if (codEmpleado <= 000){
-
-            System.out.println("Error ER1. El código del empleado no puede ser menor o igual que cero");
+            System.out.println("Error ER1. El código del empleado no puede ser superior a 3 dígitos.");
             System.exit(0);
         }
 
         else {
 
-            setCodEmpleado(codEmpleado);
-            System.out.println("Código de empleado almacenado");
+            for (int i = 0; i <= codEmpleado.length(); i++) {
+
+                if (String.valueOf(charCodeEmpleado[i]).matches("^[a-zA-Z]$")) {
+
+                    System.out.println("Error ER1, el código del empleado solo puede contener dígitos positivos");
+                    System.exit(0);
+
+                }
+
+                else {
+
+                    if (codEmpleado.length() == 1){
+
+                        codEmpleado = "00" + codEmpleado;
+                    }
+
+                    else if (codEmpleado.length() == 2){
+
+                        codEmpleado = "0" + codEmpleado;
+                    }
+
+                    int codEmp = Integer.parseInt(codEmpleado);
+                    int minCodEmp = Integer.parseInt(minCodEmpleado);
+
+                    if (codEmp < minCodEmp) {
+
+                        System.out.println("Error ER1. El código del empleado no puede ser menor o igual que cero");
+                        System.exit(0);
+
+                    }
+
+                    else {
+
+
+                        setCodEmpleado(codEmpleado);
+                        System.out.println("Código de empleado almacenado");
+                        break;
+                    }
+                }
+
+            }
         }
+
     }
 
     public void comprobarDepartamento(){
@@ -216,30 +257,55 @@ public class Empleado {
         Scanner entrada = new Scanner(System.in);
 
         System.out.println("Introduzca el departamento. (Dos cifras. Si no lo sabe, déjelo en blanco)");
-        departamento = entrada.nextLong();
+        departamento = entrada.nextLine();
 
-        String strDepartamento = String.valueOf(departamento);
+        if(departamento.length() == 0){
 
-        if(!strDepartamento.matches("^[0-9] {1,2} $")){
-
-            System.out.println("Error ER2. El departamento no puede ser superior o inferior a dos dígitos");
-        }
-
-        else if (strDepartamento.matches("[a-zA-Z]")){
-
-            System.out.println("Error ER2. El departamento no puede contener letras o caracteres especiales");
+            System.out.println("Error ER2. El código del departamento no puede estar vacío.");
             System.exit(0);
         }
 
-        else if (departamento <= 00){
+        else if(departamento.length() > 2){
 
-            System.out.println("Error ER2. El departamento no puede ser inferior o igual a 00");
+            System.out.println("Error ER2, el código del departamento no puede contenr más de dos dígitos");
+            System.exit(0);
+
         }
+
+        else if(!departamento.matches("^[0-9]")){
+
+            System.out.println("Error ER2. El departamento solo puede estar comprendido por dígitos positivos");
+            System.exit(0);
+        }
+
+
 
         else {
 
-            setDepartamento(departamento);
-            System.out.println("Departamento almacenado");
+            if (departamento.length() == 1){
+
+                departamento = "0" + departamento;
+            }
+
+            else{
+
+                int codDep = Integer.parseInt(departamento);
+                int minCodDep = Integer.parseInt(minCodDepartamento);
+
+                if (codDep < minCodDep) {
+
+                    System.out.println("Error ER2. El departamento no puede ser inferior o igual a 00");
+                    System.exit(0);
+                }
+
+
+                else {
+
+                    setDepartamento(departamento);
+                    System.out.println("Departamento almacenado");
+                }
+            }
+
         }
     }
 
