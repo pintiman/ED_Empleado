@@ -51,8 +51,8 @@ public class EmpleadoTestParametrizado {
 
         int salario = empleado.getSalario();
 
-        Assertions.assertTrue((oficio.equals("Analista")) || (oficio.equals("Diseñador")) || (oficio.equals("Programador")));
-        Assertions.assertEquals(expResult, salario);
+        assertTrue((oficio.equals("Analista")) || (oficio.equals("Diseñador")) || (oficio.equals("Programador")));
+        assertEquals(expResult, salario);
 
     }
 //
